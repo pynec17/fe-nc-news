@@ -12,8 +12,30 @@ export const getAllTopics = () => {
 };
 
 // Gets all articles - Homepage
-export const getAllArticles = () => {
-  return myApi.get("/articles").then(({ data }) => {
-    return data.articles;
+export const getAllArticles = (topicParam) => {
+  return myApi
+    .get("/articles", { params: { topic: topicParam } })
+    .then(({ data }) => {
+      return data.articles;
+    });
+};
+
+// Gets single article - Single Article
+export const getArticle = (id) => {
+  return myApi.get(`/articles/${id}`).then((res) => {
+    return res.data.article;
   });
+};
+
+// Get all comments for article - Single Article
+export const getComments = (id) => {
+  return myApi
+    .get(`articles/${id}/comments`)
+    .then((res) => {
+      console.log(res.data.comments);
+      return res.data.comments;
+    })
+    .catch((err) => {
+      console.dir(err);
+    });
 };

@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Header from "./components/Header";
 import Nav from "./components/Nav";
 import Home from "./components/Home";
+import SingleArticle from "./components/SingleArticle";
 
 function App() {
   return (
@@ -12,9 +13,8 @@ function App() {
         <Nav />
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/articles?topic=cooking" element={<Home />} />
-          <Route path="/articles?topic=football" element={<Home />} />
-          <Route path="/articles?topic=coding" element={<Home />} />
+          <Route path="/articles" element={<Home />} />
+          <Route path="/articles/:article_id" element={<SingleArticle />} />
         </Routes>
       </div>
     </BrowserRouter>

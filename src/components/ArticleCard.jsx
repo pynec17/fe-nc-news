@@ -1,7 +1,9 @@
+import { Link } from "react-router-dom";
+
 const ArticleCard = (props) => {
   return (
     <div className="article-card">
-      <h3>{props.article.title}</h3>
+      <Link to={`/articles/${props.article.article_id}`}><h3>{props.article.title}</h3></Link>
       <p>{props.article.topic}</p>
       <p>{props.article.author}</p>
       <p>{props.article.created_at}</p>

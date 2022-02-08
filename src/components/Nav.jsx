@@ -15,6 +15,7 @@ const Nav = () => {
     <div>
       <hr/>
       <p>Navbar:</p>
+      <Link key="home" to="/articles/">Home</Link> 
         {topics.map((topic) => {
           return <Link key={topic.slug} to={`/articles?topic=${topic.slug}`}>{topic.slug}</Link> 
         })}
