@@ -13,14 +13,14 @@ const Home = () => {
   const topicParam = searchParams.get("topic")
 
   
-  // Get all articles - passes in topic query as topicParam, "title" as default sort by and renders when page loads
+  // Get all articles - passes in topic query as topicParam
   useEffect(() => {
     getAllArticles(topicParam).then((res) => {
       setArticles(res);
     })
   }, [topicParam])
 
-  // Handles changes to sort_by drop down menu - takes current topicParam and sort_by value
+  // Handles any change to sort_by or order dropdowns - Gets values of both from getElementById and sends to api function with topicParam
 
   const getOrder = (event, topicParam) => {
     
@@ -32,7 +32,7 @@ const Home = () => {
     })
 
   }
-  
+
   return (
     <div>
       <p>Homepage</p>

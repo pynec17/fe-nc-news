@@ -11,7 +11,7 @@ export const getAllTopics = () => {
   });
 };
 
-// Gets all articles - Homepage
+// Gets all articles and handles all filters/sorts- Homepage
 export const getAllArticles = (topicParam, sortByParam, orderParam) => {
   console.log(topicParam, "<<<< topic");
   console.log(sortByParam, "<<<< sort_by");
@@ -51,5 +51,14 @@ export const patchVotes = (article_id, increment) => {
     .patch(`articles/${article_id}`, { inc_votes: increment })
     .then((res) => {
       console.log(res.data.article);
+    });
+};
+
+// Add a new comment - Comment component
+export const postComment = (user, newComment, id) => {
+  return myApi
+    .post(`articles/${id}/comments`, { username: user, body: newComment })
+    .then((res) => {
+      console.log(res.data.comment);
     });
 };
