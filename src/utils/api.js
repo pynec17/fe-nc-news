@@ -12,11 +12,14 @@ export const getAllTopics = () => {
 };
 
 // Gets all articles - Homepage
-export const getAllArticles = (topicParam, sortByParam) => {
+export const getAllArticles = (topicParam, sortByParam, orderParam) => {
   console.log(topicParam, "<<<< topic");
   console.log(sortByParam, "<<<< sort_by");
+  console.log(orderParam, "<<<< order");
   return myApi
-    .get("/articles", { params: { topic: topicParam, sort_by: sortByParam } })
+    .get("/articles", {
+      params: { topic: topicParam, sort_by: sortByParam, order: orderParam },
+    })
     .then(({ data }) => {
       console.log(data.articles);
       return data.articles;

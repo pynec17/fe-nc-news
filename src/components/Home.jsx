@@ -22,22 +22,22 @@ const Home = () => {
 
   // Handles changes to sort_by drop down menu - takes current topicParam and sort_by value
 
-  const sortBy = (event, topicParam) => {
-    console.log(event.target.value)
-    const sortByParam = event.target.value
-    getAllArticles(topicParam, sortByParam).then((res) => {
+  const getOrder = (event, topicParam) => {
+    
+    const sortByParam = document.getElementById("sort-by-drop-down").value
+    const orderParam = document.getElementById("order-drop-down").value
+    
+    getAllArticles(topicParam, sortByParam, orderParam).then((res) => {
       setArticles(res)
     })
-    
+
   }
-
-
-
+  
   return (
     <div>
       <p>Homepage</p>
       {/* Sets default sort_by to created_at - same as in database */}
-      <select defaultValue="created_at" onChange={(event) => sortBy(event, topicParam)}>
+      <select id="sort-by-drop-down" defaultValue="created_at" onChange={(event) => getOrder(event, topicParam)}>
         <option value="created_at">Created at</option>
         <option value="title">Title</option>
         <option value="topic">Topic</option>
@@ -45,9 +45,10 @@ const Home = () => {
         <option value="votes">Votes</option>
         <option value="comment_count">Comment count</option>
       </select>
-      <select>
-        <option value="descending">Descending</option>
-        <option value="ascending">Ascending</option>
+      
+      <select id="order-drop-down" onChange={(event) => {getOrder(event, topicParam)}}>
+        <option value="desc" >Descending</option>
+        <option value="asc">Ascending</option>
       </select>
       {articles.map((article) => {
         return <ArticleCard key={article.article_id} article={article}/>
