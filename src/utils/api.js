@@ -18,6 +18,7 @@ export const getAllArticles = (topicParam, sortByParam) => {
   return myApi
     .get("/articles", { params: { topic: topicParam, sort_by: sortByParam } })
     .then(({ data }) => {
+      console.log(data.articles);
       return data.articles;
     });
 };
