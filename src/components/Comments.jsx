@@ -8,7 +8,6 @@ const Comments = (props) => {
   useEffect(() => {
     getComments(props.article_id).then((res) => {
       setComments(res)
-      console.log(res)
     })
   }, [])
 
@@ -30,6 +29,4 @@ const Comments = (props) => {
   );
 };
 
-
-
-export default Comments;
+export default Comments; 

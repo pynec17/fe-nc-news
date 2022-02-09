@@ -12,9 +12,11 @@ export const getAllTopics = () => {
 };
 
 // Gets all articles - Homepage
-export const getAllArticles = (topicParam) => {
+export const getAllArticles = (topicParam, sortByParam) => {
+  console.log(topicParam, "<<<< topic");
+  console.log(sortByParam, "<<<< sort_by");
   return myApi
-    .get("/articles", { params: { topic: topicParam } })
+    .get("/articles", { params: { topic: topicParam, sort_by: sortByParam } })
     .then(({ data }) => {
       return data.articles;
     });
@@ -32,10 +34,18 @@ export const getComments = (id) => {
   return myApi
     .get(`articles/${id}/comments`)
     .then((res) => {
-      console.log(res.data.comments);
       return res.data.comments;
     })
     .catch((err) => {
       console.dir(err);
+    });
+};
+
+// Increase/decrease article vote count
+export const patchVotes = (article_id, increment) => {
+  return myApi
+    .patch(`articles/${article_id}`, { inc_votes: increment })
+    .then((res) => {
+      console.log(res.data.article);
     });
 };

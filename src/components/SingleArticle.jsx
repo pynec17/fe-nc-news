@@ -1,15 +1,14 @@
 import { useEffect, useState } from "react";
 import {useParams} from "react-router-dom"
-import { getArticle } from "../utils/api";
+import { getArticle, patchVotes } from "../utils/api";
 import Comments from "./Comments";
 
 const SingleArticle = () => {
-// Get article ID from params in URL
-// Do useeffect to get article info
-// Make component for each comment?
 
 const { article_id } = useParams()
 const [article, setArticle] = useState({})
+const [voteIncrement, setVoteIncrement] = useState(0)
+
 
 useEffect(() => {
   getArticle(article_id).then((res) => {
@@ -17,7 +16,15 @@ useEffect(() => {
   })
 }, [])
 
+const voteUp = (article_id) => {
+  setVoteIncrement(currVoteIncrement => currVoteIncrement + 1)
+  patchVotes(article_id, 1 )
+}
 
+const voteDown = () => {
+  setVoteIncrement(currVoteIncrement => currVoteIncrement - 1)
+  patchVotes(article_id, -1)
+}
 
   return (
     <div>
@@ -30,11 +37,16 @@ useEffect(() => {
       <br/>
       <br/>
       <p>{article.body}</p>
-      <p>Votes: {article.votes}</p>
+      <p>Votes: {article.votes + voteIncrement}</p>
       <p>{article.comment_count} comments</p>
+      <button onClick={() => voteUp(article_id)}>Vote up!</button>
+      <button onClick={() => voteDown()}>Vote down!</button>
       <hr/>
       <h3> Comments </h3>
+      <h4>Add new comment: </h4>
+      <input type="textarea" />
       <Comments article_id={article_id} />
+
     </div>
   );
 };
