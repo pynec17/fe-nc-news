@@ -54,11 +54,18 @@ export const patchVotes = (article_id, increment) => {
     });
 };
 
-// Add a new comment - Comment component
+// Add a new comment - Comments component
 export const postComment = (user, newComment, id) => {
   return myApi
     .post(`articles/${id}/comments`, { username: user, body: newComment })
     .then((res) => {
       console.log(res.data.comment);
     });
+};
+
+// Delete comment - Comments component
+export const deleteComment = (id) => {
+  return myApi.delete(`comments/${id}`).then((res) => {
+    console.log(res);
+  });
 };

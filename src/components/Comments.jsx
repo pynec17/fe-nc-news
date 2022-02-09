@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getComments, postComment } from "../utils/api";
+import { deleteComment, getComments, postComment } from "../utils/api";
 import { useContext } from "react";
 import { UserContext } from "../contexts/User";
 
@@ -32,16 +32,25 @@ const Comments = (props) => {
     
   }
 
+  const removeComment = (id) => {
+    console.log("delete")
+    deleteComment(id).then(() => {
+      console.log("deleted")
+      document.getElementById(`delete-confirm-${id}`).innerText = "Comment deleted!"
+      console.log("thing added")
+    })
+  }
+
   return (
     <div>
         <h4>Add new comment: </h4>
 
         <form onSubmit={(event) => {handleSubmit(event)}}>
         <textarea value={newComment} onChange={(event) => {handleChange(event)}} id="comment-box" rows="4" cols="50" />
+        <p id="comment-confirmation"></p>
         <button type="submit">Post comment</button> 
         </form>
-
-        <p id="comment-confirmation"></p>
+        
       
       {/* Make this a component */}
       <ul>
@@ -51,7 +60,9 @@ const Comments = (props) => {
             <p>{comment.author}</p>
             <p>{comment.created_at}</p>
             <p>{comment.votes}</p>
+            {comment.author === user ? <button onClick={() => removeComment(comment.comment_id) }>Delete</button>: null}
             <br/>
+            <p id={`delete-confirm-${comment.comment_id}`}></p>
           </li>
         })}
         </ul>
