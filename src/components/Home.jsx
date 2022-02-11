@@ -8,38 +8,23 @@ const Home = () => {
 
   const [articles, setArticles] = useState([])
   const [error, setError] = useState(null)
-  
-  // Get searchParam state and get specific param from it
+  const [orderParam, setOrderParam] = useState("desc")
+  const [sortByParam, setSortByParam] = useState("created_at")
   const [searchParams, setSearchParams] = useSearchParams()
-  
   const topicParam = searchParams.get("topic")
 
-
-  
-  // Get all articles - passes in topic query as topicParam
+  // Get all articles - passes in optional topic/sort_by/order queries
   useEffect(() => {
-    getAllArticles(topicParam).then((res) => {
+    getAllArticles(topicParam, sortByParam, orderParam).then((res) => {
       setArticles(res);
     })
     .catch((err) => {
       setError({err})
       console.log({err})
     })
-  }, [topicParam])
+  }, [topicParam, sortByParam, orderParam])
 
-  // Handles any change to sort_by or order dropdowns - Gets values of both from getElementById and sends to api function with topicParam
-
-  const getOrder = (event, topicParam) => {
-    
-    const sortByParam = document.getElementById("sort-by-drop-down").value
-    const orderParam = document.getElementById("order-drop-down").value
-    
-    getAllArticles(topicParam, sortByParam, orderParam).then((res) => {
-      setArticles(res)
-    })
-  
-    // Renders page
-  }
+  // Renders page
   if (error) {
     return <ErrorPage message={error.err.response.data.message} />
   }
@@ -47,16 +32,16 @@ const Home = () => {
     <div>
       <p>{topicParam}</p>
       {/* Sets default sort_by to created_at - same as in database */}
-      <select id="sort-by-drop-down" defaultValue="created_at" onChange={(event) => getOrder(event, topicParam)}>
+      <select id="sort-by-drop-down" onChange={(event) => setSortByParam(event.target.value)} >
         <option value="created_at">Created at</option>
         <option value="title">Title</option>
         <option value="topic">Topic</option>
-        <option value="author">Author</option>
+        <option value="author">Author</option> 
         <option value="votes">Votes</option>
         <option value="comment_count">Comment count</option>
       </select>
       
-      <select id="order-drop-down" onChange={(event) => {getOrder(event, topicParam)}}>
+      <select id="order-drop-down" onChange={(event) => setOrderParam(event.target.value)}>
         <option value="desc" >Descending</option>
         <option value="asc">Ascending</option>
       </select>

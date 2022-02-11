@@ -15,9 +15,9 @@ const Nav = () => {
 
   return (
     <div className="nav-bar">
-      <Button variant="contained"><Link key="home" to="/articles/">Home</Link></Button> 
+      <Button variant="contained" color="success"><Link key="home" to="/articles/">Home</Link></Button> 
         {topics.map((topic) => {
-          return <Button variant="contained"><Link key={topic.slug} to={`/articles?topic=${topic.slug}`}>{topic.slug}</Link></Button> 
+          return <Button variant="contained" color="success"><Link key={topic.slug} to={`/articles?topic=${topic.slug}`}>{topic.slug}</Link></Button> 
         })}
         <hr/>
     </div>

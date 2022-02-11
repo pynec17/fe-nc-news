@@ -40,23 +40,17 @@ export const getComments = (id) => {
 export const patchVotes = (article_id, increment) => {
   return myApi
     .patch(`articles/${article_id}`, { inc_votes: increment })
-    .then((res) => {
-      console.log(res.data.article);
-    });
+    .then((res) => {});
 };
 
 // Add a new comment - Comments component
 export const postComment = (user, newComment, id) => {
   return myApi
     .post(`articles/${id}/comments`, { username: user, body: newComment })
-    .then((res) => {
-      console.log(res.data.comment);
-    });
+    .then((res) => {});
 };
 
 // Delete comment - Comments component
 export const deleteComment = (id) => {
-  return myApi.delete(`comments/${id}`).then((res) => {
-    console.log(res);
-  });
+  return myApi.delete(`comments/${id}`).then((res) => {});
 };

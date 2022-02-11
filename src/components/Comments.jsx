@@ -20,12 +20,10 @@ const Comments = (props) => {
   // Handles change to comment box
   const handleChange = (event) => {
     setNewComment(event.target.value)
-    console.log(newComment)
   }
   // Submits new comment to api
   const handleSubmit = (event) => {
     event.preventDefault()
-    console.log(newComment)
     postComment(user, newComment, props.article_id).then(() => {
       document.getElementById("comment-confirmation").innerText = "Comment posted!"
       setNewComment("")
@@ -34,26 +32,22 @@ const Comments = (props) => {
 
   // Removes comment 
   const removeComment = (id) => {
-    console.log("delete")
-    deleteComment(id).then(() => {
-      console.log("deleted")
-    })
+    deleteComment(id)
   }
 
   return (
     <div>
         <h4>Add new comment: </h4>
-
         <form onSubmit={(event) => {handleSubmit(event)}}>
-        <textarea value={newComment} onChange={(event) => {handleChange(event)}} id="comment-box" rows="4" cols="50" />
+        <textarea value={newComment} placeholder="Write comment here..." onChange={(event) => {handleChange(event)}} id="comment-box" rows="4" cols="50" />
         <p id="comment-confirmation"></p>
         <button type="submit">Post comment</button> 
         </form>
-        
+
       {/* Make this a component */}
         <div id="comment-container"> 
         {comments.map((comment) => {
-          return <div className="comment-box">
+          return <div  key={comment.comment_id} className="comment-box">
             <p>{comment.body}</p>
             <p>by {comment.author}</p>
             <p>{dayjs(comment.created_at).format("dddd D MMM, h:mm a")}</p>
