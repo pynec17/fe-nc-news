@@ -2,21 +2,28 @@ import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { getAllArticles } from "../utils/api";
 import ArticleCard from "./ArticleCard";
+import ErrorPage from "./ErrorPage";
 
 const Home = () => {
 
   const [articles, setArticles] = useState([])
+  const [error, setError] = useState(null)
   
   // Get searchParam state and get specific param from it
   const [searchParams, setSearchParams] = useSearchParams()
   
   const topicParam = searchParams.get("topic")
 
+
   
   // Get all articles - passes in topic query as topicParam
   useEffect(() => {
     getAllArticles(topicParam).then((res) => {
       setArticles(res);
+    })
+    .catch((err) => {
+      setError({err})
+      console.log({err})
     })
   }, [topicParam])
 
@@ -30,12 +37,15 @@ const Home = () => {
     getAllArticles(topicParam, sortByParam, orderParam).then((res) => {
       setArticles(res)
     })
-
+  
+    // Renders page
   }
-
+  if (error) {
+    return <ErrorPage message={error.err.response.data.message} />
+  }
   return (
     <div>
-      <p>Homepage</p>
+      <p>{topicParam}</p>
       {/* Sets default sort_by to created_at - same as in database */}
       <select id="sort-by-drop-down" defaultValue="created_at" onChange={(event) => getOrder(event, topicParam)}>
         <option value="created_at">Created at</option>

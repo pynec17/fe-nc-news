@@ -1,11 +1,57 @@
+* {
+  /* border: 1px solid black; */
+}
+
 body {
   margin-left: 10px;
-  background-color: rgb(164, 202, 175);
+  background-color: rgb(25, 25, 114);
+  color: white;
+  text-align: center;
+  line-height: 1.6;
 }
 
 .article-card {
+  background-color: cadetblue;
+  border-radius: 20px;
+  display: grid;
+  grid-template-columns: 90% 1fr;
+  grid-template-rows: auto 1fr 1fr 1fr;
+  grid-template-areas:
+    "link vote"
+    "link vote"
+    "link vote"
+    "link vote";
   border: 1px solid black;
-  width: 500px;
+  width: 90%;
   margin: 10px;
   padding: 5px;
+}
+
+#vote-number {
+  border-left: 3px solid white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.5rem;
+  grid-area: vote;
+}
+
+.article-card p,
+.comment-box p {
+  margin: 0px;
+}
+
+article {
+  font-size: 18px;
+  line-height: 1.6;
+}
+
+.comment-box {
+  border: 1px solid white;
+  background-color: cadetblue;
+  margin: 10px;
+  border-radius: 20px;
+}
+
+.nav-bar {
 }

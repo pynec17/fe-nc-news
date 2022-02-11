@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { deleteComment, getComments, postComment } from "../utils/api";
 import { useContext } from "react";
 import { UserContext } from "../contexts/User";
+import dayjs from "dayjs";
 
 const Comments = (props) => {
 
@@ -14,7 +15,7 @@ const Comments = (props) => {
     getComments(props.article_id).then((res) => {
       setComments(res)
     })
-  }, [])
+  }, [comments])
 
   // Handles change to comment box
   const handleChange = (event) => {
@@ -28,16 +29,14 @@ const Comments = (props) => {
     postComment(user, newComment, props.article_id).then(() => {
       document.getElementById("comment-confirmation").innerText = "Comment posted!"
       setNewComment("")
-    })
-    
+    }) 
   }
 
+  // Removes comment 
   const removeComment = (id) => {
     console.log("delete")
     deleteComment(id).then(() => {
       console.log("deleted")
-      document.getElementById(`delete-confirm-${id}`).innerText = "Comment deleted!"
-      console.log("thing added")
     })
   }
 
@@ -51,21 +50,19 @@ const Comments = (props) => {
         <button type="submit">Post comment</button> 
         </form>
         
-      
       {/* Make this a component */}
-      <ul>
+        <div id="comment-container"> 
         {comments.map((comment) => {
-          return <li key={comment.comment_id}>
+          return <div className="comment-box">
             <p>{comment.body}</p>
-            <p>{comment.author}</p>
-            <p>{comment.created_at}</p>
-            <p>{comment.votes}</p>
-            {comment.author === user ? <button onClick={() => removeComment(comment.comment_id) }>Delete</button>: null}
-            <br/>
+            <p>by {comment.author}</p>
+            <p>{dayjs(comment.created_at).format("dddd D MMM, h:mm a")}</p>
+            <p>Votes: {comment.votes}</p>
+            {comment.author === user ? <button onClick={() => removeComment(comment.comment_id) }>Delete</button>: <></>}
             <p id={`delete-confirm-${comment.comment_id}`}></p>
-          </li>
+            </div>
         })}
-        </ul>
+      </div>
     </div>
   );
 };

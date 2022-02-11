@@ -13,15 +13,11 @@ export const getAllTopics = () => {
 
 // Gets all articles and handles all filters/sorts- Homepage
 export const getAllArticles = (topicParam, sortByParam, orderParam) => {
-  console.log(topicParam, "<<<< topic");
-  console.log(sortByParam, "<<<< sort_by");
-  console.log(orderParam, "<<<< order");
   return myApi
     .get("/articles", {
       params: { topic: topicParam, sort_by: sortByParam, order: orderParam },
     })
     .then(({ data }) => {
-      console.log(data.articles);
       return data.articles;
     });
 };
@@ -35,14 +31,9 @@ export const getArticle = (id) => {
 
 // Get all comments for article - Single Article
 export const getComments = (id) => {
-  return myApi
-    .get(`articles/${id}/comments`)
-    .then((res) => {
-      return res.data.comments;
-    })
-    .catch((err) => {
-      console.dir(err);
-    });
+  return myApi.get(`articles/${id}/comments`).then((res) => {
+    return res.data.comments;
+  });
 };
 
 // Increase/decrease article vote count
