@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { getAllTopics } from "../utils/api";
-// MUI
-import { Button } from "@mui/material";
+import "../Nav.css"
 
 const Nav = () => {
   const [topics, setTopics] = useState([]);
@@ -14,13 +13,15 @@ const Nav = () => {
   }, []);
 
   return (
-    <div className="nav-bar">
-      <Button variant="contained" color="success"><Link key="home" to="/articles/">Home</Link></Button> 
+    <nav className="nav-bar">
+      <div className="nav-button">
+      <Link key="home" to="/articles/">Home</Link>
+      </div>
         {topics.map((topic) => {
-          return <Button variant="contained" color="success"><Link key={topic.slug} to={`/articles?topic=${topic.slug}`}>{topic.slug}</Link></Button> 
+          return <div className="nav-button"><Link key={topic.slug} to={`/articles?topic=${topic.slug}` }>{topic.slug}</Link></div> 
         })}
-        <hr/>
-    </div>
+    
+    </nav>
   );
 };
 

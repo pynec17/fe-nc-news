@@ -1,0 +1,24 @@
+.nav-bar {
+  background-color: black;
+  display: flex;
+  justify-content: flex-start;
+  overflow: hidden;
+}
+
+.nav-bar a {
+  padding: 10px 10px;
+  font-size: 20px;
+  text-decoration: none;
+  color: white;
+  /* border: 2px solid red; */
+  text-align: center;
+}
+
+.nav-bar div::first-letter {
+  text-transform: capitalize;
+}
+
+.nav-bar a:hover {
+  background-color: white;
+  color: black;
+}

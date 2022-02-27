@@ -1,7 +1,7 @@
 const Header = () => {
   return (
-    <div>
-      <h1 style={{textDecoration:"underline"}}>NC News</h1>
+    <div className="header">
+      <h1 >NC News</h1>
     </div>
   );
 };

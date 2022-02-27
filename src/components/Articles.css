@@ -1,0 +1,26 @@
+.article-container {
+  width: 90%;
+  margin: 0px auto;
+  border: 10px blue solid;
+}
+
+.article-card {
+  background-color: cadetblue;
+  border-radius: 20px;
+  display: grid;
+  grid-template-columns: 90% 1fr;
+  grid-template-rows: auto 1fr 1fr 1fr;
+  grid-template-areas:
+    "link vote"
+    "link vote"
+    "link vote"
+    "link vote";
+  border: 1px solid black;
+  width: 90%;
+  margin: 10px;
+  padding: 5px;
+}
+.article-card p,
+.comment-box p {
+  margin: 0px;
+}

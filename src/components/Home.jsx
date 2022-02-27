@@ -3,6 +3,7 @@ import { useSearchParams } from "react-router-dom";
 import { getAllArticles } from "../utils/api";
 import ArticleCard from "./ArticleCard";
 import ErrorPage from "./ErrorPage";
+import "./Articles.css"
 
 const Home = () => {
 
@@ -30,7 +31,6 @@ const Home = () => {
   }
   return (
     <div>
-      <p>{topicParam}</p>
       {/* Sets default sort_by to created_at - same as in database */}
       <select id="sort-by-drop-down" onChange={(event) => setSortByParam(event.target.value)} >
         <option value="created_at">Created at</option>
@@ -45,9 +45,11 @@ const Home = () => {
         <option value="desc" >Descending</option>
         <option value="asc">Ascending</option>
       </select>
+      <div class="article-container">
       {articles.map((article) => {
         return <ArticleCard key={article.article_id} article={article}/>
       })}
+      </div>
 
     </div>
   );
