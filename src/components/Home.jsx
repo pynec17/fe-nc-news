@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { getAllArticles } from "../utils/api";
 import ArticleCard from "./ArticleCard";
 import ErrorPage from "./ErrorPage";
@@ -11,8 +11,10 @@ const Home = () => {
   const [error, setError] = useState(null)
   const [orderParam, setOrderParam] = useState("desc")
   const [sortByParam, setSortByParam] = useState("created_at")
-  const [searchParams, setSearchParams] = useSearchParams()
-  const topicParam = searchParams.get("topic")
+  
+  const location = useLocation()  
+  const queries = new URLSearchParams(location.search)
+  const topicParam = queries.get("topic")
 
   // Get all articles - passes in optional topic/sort_by/order queries
   useEffect(() => {
