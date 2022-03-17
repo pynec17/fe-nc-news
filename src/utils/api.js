@@ -12,9 +12,9 @@ export const getAllTopics = () => {
 };
 
 // Gets all articles and handles all filters/sorts- Homepage
-export const getAllArticles = (topicParam, sortByParam, orderParam) => {
+export const getAllArticles = (page, topicParam, sortByParam, orderParam) => {
   return myApi
-    .get("/articles", {
+    .get(`/articles?p=${page}&limit=5`, {
       params: { topic: topicParam, sort_by: sortByParam, order: orderParam },
     })
     .then(({ data }) => {
@@ -30,8 +30,8 @@ export const getArticle = (id) => {
 };
 
 // Get all comments for article - Single Article
-export const getComments = (id) => {
-  return myApi.get(`articles/${id}/comments`).then((res) => {
+export const getComments = (id, page) => {
+  return myApi.get(`articles/${id}/comments?p=${page}&limit=5`).then((res) => {
     return res.data.comments;
   });
 };
@@ -53,4 +53,37 @@ export const postComment = (user, newComment, id) => {
 // Delete comment - Comments component
 export const deleteComment = (id) => {
   return myApi.delete(`comments/${id}`).then((res) => {});
+};
+
+// Increase/decrease comment vote count
+export const patchCommentVotes = (comment_id, increment) => {
+  return myApi
+    .patch(`comments/${comment_id}`, { inc_votes: increment })
+    .then((res) => {});
+};
+
+// Post article - Post article component
+export const postArticle = (title, body, topic, author) => {
+  return myApi
+    .post(`/articles`, {
+      title: title,
+      body: body,
+      topic: topic,
+      author: author,
+    })
+    .then((res) => {
+      return res.data.article;
+    });
+};
+
+// Delete article - single article page
+export const deleteArticle = (id) => {
+  return myApi.delete(`/articles/${id}`).then((res) => {});
+};
+
+// Get users - Users page
+export const getUsers = () => {
+  return myApi.get("/users").then(({ data }) => {
+    return data.users;
+  });
 };
