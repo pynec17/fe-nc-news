@@ -11,6 +11,9 @@ const Home = () => {
   const [error, setError] = useState(null)
   const [orderParam, setOrderParam] = useState("desc")
   const [sortByParam, setSortByParam] = useState("created_at")
+  const [page, setPage] = useState(1)
+  const [totalCount, setTotalCount] = useState(0)
+  
   
   const location = useLocation()  
   const queries = new URLSearchParams(location.search)
@@ -18,14 +21,15 @@ const Home = () => {
 
   // Get all articles - passes in optional topic/sort_by/order queries
   useEffect(() => {
-    getAllArticles(topicParam, sortByParam, orderParam).then((res) => {
+    getAllArticles(page, topicParam, sortByParam, orderParam).then((res) => {
       setArticles(res);
+      setTotalCount(res[0].total_count)
     })
     .catch((err) => {
       setError({err})
       console.log({err})
     })
-  }, [topicParam, sortByParam, orderParam])
+  }, [topicParam, sortByParam, orderParam, page])
 
   // Renders page
   if (error) {
@@ -52,6 +56,9 @@ const Home = () => {
         return <ArticleCard key={article.article_id} article={article}/>
       })}
       </div>
+      <button onClick={() => {setPage((currPage) => currPage - 1)}} disabled={page===1}>Previous page</button>
+      <p>Page:{page}</p>
+      <button onClick={() => {setPage((currPage) => currPage + 1)}} disabled={page*5>=totalCount}>Next page</button>
 
     </div>
   );

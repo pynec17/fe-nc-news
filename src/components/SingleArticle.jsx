@@ -1,9 +1,10 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import {useParams} from "react-router-dom"
-import { getArticle, patchVotes } from "../utils/api";
+import { deleteArticle, getArticle, patchVotes } from "../utils/api";
 import dayjs from "dayjs";
 import Comments from "./Comments";
 import ErrorPage from "./ErrorPage";
+import { UserContext } from "../contexts/User";
 
 const SingleArticle = () => {
   
@@ -12,6 +13,9 @@ const SingleArticle = () => {
   const [error, setError] = useState(null)
   const [article, setArticle] = useState({})
   const [voteIncrement, setVoteIncrement] = useState(0)
+  const [voted, setVoted] = useState(false)
+  const [deleted, setDeleted] = useState(false)
+  const {user, setUser} = useContext(UserContext)
 
   // Fetch article from api when page loads
   useEffect(() => {
@@ -27,18 +31,32 @@ const SingleArticle = () => {
 
   // Handles vote changes
   const voteUp = () => {
-    setVoteIncrement(currVoteIncrement => currVoteIncrement + 1)
-    patchVotes(article_id, 1 )
+    if (!voted) {
+      setVoteIncrement(currVoteIncrement => currVoteIncrement + 1)
+      setVoted(true)
+      patchVotes(article_id, 1 )
+    }
   }
 
   const voteDown = () => {
+    if (!voted) {
     setVoteIncrement(currVoteIncrement => currVoteIncrement - 1)
+    setVoted(true)
     patchVotes(article_id, -1)
+    }
+  }
+  
+  const removeArticle = () => {
+    deleteArticle(article_id).then(() => {
+      setDeleted(true)
+    })
   }
 
   // Renders page
   if (error) {
     return <ErrorPage message={error.err.response.data.message} />
+  } else if (deleted) {
+    return <h1>Article deleted!</h1>
   }
     return (
       <div>
@@ -55,8 +73,10 @@ const SingleArticle = () => {
         <p>{article.comment_count} comments</p>
         <button onClick={() => voteUp()}>Vote up!</button>
         <button onClick={() => voteDown()}>Vote down!</button>
+        <br/>
+        {article.author===user && <button onClick={() => removeArticle()}>Delete</button>}
         <hr/>
-        <h3> Comments </h3>
+
         <Comments article_id={article_id} />
 
       </div>

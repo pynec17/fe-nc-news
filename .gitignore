@@ -23,6 +23,7 @@ yarn-debug.log*
 yarn-error.log*
 /to-do
 /to-do-project
+todo.txt
 
 # Local Netlify folder
 .netlify

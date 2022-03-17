@@ -1,11 +1,10 @@
 .article-container {
-  width: 90%;
+  width: 80%;
   margin: 0px auto;
-  border: 10px blue solid;
 }
 
 .article-card {
-  background-color: cadetblue;
+  background-color: rgb(119, 154, 163);
   border-radius: 20px;
   display: grid;
   grid-template-columns: 90% 1fr;
@@ -15,8 +14,8 @@
     "link vote"
     "link vote"
     "link vote";
-  border: 1px solid black;
-  width: 90%;
+  border: 1px solid rgb(124, 120, 120);
+  width: 100%;
   margin: 10px;
   padding: 5px;
 }
